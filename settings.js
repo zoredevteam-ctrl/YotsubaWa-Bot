@@ -53,7 +53,7 @@ global.suittag = ['18293527611']; // Reemplaza el placeholder con números reale
 global.prems = []; // Array vacío para usuarios premium (agrega según necesites)
 
 // Assets y configuraciones visuales
-global.banner = 'https://www.hdwallpapers.in/download/yotsuba_nakano_hd_the_quintessential_quintuplets-2560x1440.jpg';
+global.banner = 'https://causas-files.vercel.app/fl/xfab.jpg';
 global.icono = 'https://i.pinimg.com/736x/c5/83/6e/c5836efb60c825e71999ef67d0bbb700.jpg';
 global.catalogo = null;
 
