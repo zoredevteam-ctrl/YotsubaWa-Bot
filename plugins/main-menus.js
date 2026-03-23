@@ -177,7 +177,7 @@ const menuConfig = [
 *╰─ׅ─ׅ┈─๋︩︪─☪︎︎︎̸⃘࣭ٜ࣪࣪࣪۬◌⃘۪֟፝֯۫۫︎⃪𐇽۫۬🌟◌⃘࣭ٜ࣪࣪࣪۬☪︎︎︎︎̸─ׅ─ׅ┈─๋︩︪─╯*` },
 ]
 
-const FOTO_MENU = 'https://yotsuba-web.giize.com/upload/id=menus.jpg'
+const FOTO_MENU = 'https://causas-files.vercel.app/fl/pxun.jpg'
 const comandos = menuConfig.map(m => m.cmd)
 
 const handler = async (m, { conn, command }) => {
