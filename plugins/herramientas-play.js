@@ -148,7 +148,7 @@ const handler = async (m, { conn, text = '', usedPrefix = '', command = '' }) =>
       ['📁 Video como Documento', 'ytdlv2_video_doc']
     ];
 
-    const infoText = `*╭ִ╼࣪━ִ👑𝗬𝗼𝘁𝘀𝘂𝗯𝗮━ִ╾࣪╮*
+    const infoText = `*╭ִ╼࣪━ִ𐚁๋࣭⭑ֶָ֢ ყσƭรµɓα ωα ⚡︎━ִ╾࣪╮*
 
 > 👑 *Título:* ${title}
 > 🌟 *Duración:* ${timestamp}
