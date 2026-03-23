@@ -49,7 +49,7 @@ let handler = async (m, { conn }) => {
   const cfg = readSessionConfig(conn)
   const nombreBot = 'Yotsuba Nakano' // Nombre fijo como solicitaste
   const currency = cfg.currency || 'Coins'
-  const bannerUrl = cfg.banner || 'https://causas-files.vercel.app/fl/w3bo.jpg' // Imagen bonita de Yotsuba Nakano
+  const bannerUrl = cfg.banner || 'https://causas-files.vercel.app/fl/xfab.jpg' // Imagen bonita de Yotsuba Nakano
 
   // Descargar la imagen para enviarla
   let imageBuffer = null
