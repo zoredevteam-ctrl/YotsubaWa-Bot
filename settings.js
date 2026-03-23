@@ -54,7 +54,7 @@ global.prems = []; // Array vacío para usuarios premium (agrega según necesite
 
 // Assets y configuraciones visuales
 global.banner = 'https://causas-files.vercel.app/fl/xfab.jpg';
-global.icono = 'https://i.pinimg.com/736x/c5/83/6e/c5836efb60c825e71999ef67d0bbb700.jpg';
+global.icono = 'https://causas-files.vercel.app/fl/j4si.jpg';
 global.catalogo = null;
 
 // Otras configuraciones
