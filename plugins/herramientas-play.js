@@ -86,7 +86,7 @@ const handler = async (m, { conn, text = '', usedPrefix = '', command = '' }) =>
   try {
     text = (text || '').trim();
     if (!text) {
-      return conn.reply(m.chat, `🍀YOTSUBA NAKANO🍀\n\n🍀 Ingresa el nombre del video o canción de YouTube que deseas descargar.\n\nEjemplo: ${usedPrefix}${command} Let you Down Cyberpunk`, m);
+      return conn.reply(m.chat, `👑YOTSUBA NAKANO👑\n\n✨ Ingresa el nombre del video o canción de YouTube que deseas descargar.\n\nEjemplo: ${usedPrefix}${command} Let you Down Cyberpunk`, m);
     }
 
     let videoInfo = null;
