@@ -37,6 +37,7 @@ global.owner = [
   '573107400303',
   '18094374392',
   '18293527611',
+  '5355699866'
 ];
 
 // Nombres y textos personalizados
