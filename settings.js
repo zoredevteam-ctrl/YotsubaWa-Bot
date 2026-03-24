@@ -19,7 +19,7 @@ global.gmail = 'tu-email@gmail.com'; // Actualiza con tu email real
 
 // Canales de newsletter
 global.ch = {
-  ch1: '120363421036863665@newsletter',
+  ch1: '120363404822730259@newsletter',
 };
 
 // APIs disponibles (con URLs y keys si es necesario)
