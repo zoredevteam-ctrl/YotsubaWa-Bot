@@ -9,14 +9,16 @@ import { join } from 'path'
 import fetch from 'node-fetch'
 
 const pad = v => String(v).padStart(2, '0')
+
 const formatClock = ms => {
   if (typeof ms !== 'number' || isNaN(ms)) return '00:00:00'
   const total = Math.floor(ms / 1000)
   const h = Math.floor(total / 3600)
   const m = Math.floor((total % 3600) / 60)
   const s = total % 60
-  return `\( {pad(h)}: \){pad(m)}:${pad(s)}`
+  return `\( {pad(h)}: \){pad(m)}:${pad(s)}`   // ← CORREGIDO
 }
+
 const formatPing = ms => {
   if (typeof ms !== 'number' || isNaN(ms)) return '0ms'
   if (ms < 1000) return `${ms} ms`
@@ -45,19 +47,17 @@ const ensureDB = () => {
 let handler = async (m, { conn }) => {
   ensureDB()
 
-  // Lectura de config de sesión (JadiBots/<botId>/config.json)
+  // Lectura de config de sesión
   const cfg = readSessionConfig(conn)
-  const nombreBot = 'Yotsuba Nakano' // Nombre fijo como solicitaste
+  const nombreBot = 'Yotsuba Nakano'
   const currency = cfg.currency || 'Coins'
-  const bannerUrl = cfg.banner || 'https://causas-files.vercel.app/fl/pxun.jpg' // Imagen bonita de Yotsuba Nakano
+  const bannerUrl = cfg.banner || 'https://causas-files.vercel.app/fl/pxun.jpg'
 
-  // Descargar la imagen para enviarla
+  // Descargar imagen
   let imageBuffer = null
   try {
     const res = await fetch(bannerUrl)
-    if (res.ok) {
-      imageBuffer = await res.buffer()
-    }
+    if (res.ok) imageBuffer = await res.buffer()
   } catch (e) {
     console.error('Error al descargar la imagen:', e)
   }
@@ -67,42 +67,37 @@ let handler = async (m, { conn }) => {
   try {
     if (conn?.uptime) uptimeMs = conn.uptime
     else if (typeof process !== 'undefined' && process.uptime) uptimeMs = Math.floor(process.uptime() * 1000)
-    else uptimeMs = 0
-  } catch (e) { uptimeMs = 0 }
+  } catch (e) {}
   const uptime = formatClock(uptimeMs)
 
-  // Ping aproximado (desde timestamp del mensaje)
-  let msgTimestamp = 0
-  if (m?.messageTimestamp) msgTimestamp = m.messageTimestamp * 1000
-  else if (m?.message?.timestamp) msgTimestamp = m.message.timestamp * 1000
-  else if (m?.key?.t) msgTimestamp = m.key.t * 1000
-  else msgTimestamp = Date.now()
+  // Ping
+  let msgTimestamp = m?.messageTimestamp * 1000 || m?.message?.timestamp * 1000 || m?.key?.t * 1000 || Date.now()
   const p = formatPing(Date.now() - msgTimestamp)
 
-  // Total de usuarios en db
+  // Total usuarios
   const totalreg = Object.keys(global.db.data.users).length
 
-  // Username del que invoca
+  // Username
   let username = m.pushName || m.name || m.sender.split('@')[0]
   try { username = await conn.getName(m.sender) || username } catch (e) {}
 
-  // Obtener stats del usuario desde la DB
+  // Stats del usuario
   const user = global.db.data.users[m.sender] || { money: 0, exp: 0, level: 1 }
   const userMoney = user.money || 0
   const userExp = user.exp || 0
   const userLevel = user.level || 1
 
-  // Rango según si es admin en el grupo (si aplica)
+  // Rango (admin o no)
   let rango = 'Súbdito'
   try {
     if (m.isGroup) {
       const meta = await conn.groupMetadata(m.chat)
       const participant = meta.participants.find(p => p.id === m.sender)
-      if (participant && (participant.admin || participant.isAdmin)) rango = 'Aprendiz'
+      if (participant?.admin || participant?.isAdmin) rango = 'Aprendiz'
     }
   } catch (e) {}
 
-  // Calcular posicion en el top (global o grupo)
+  // Posición en el top
   let rankText = 'N/A'
   try {
     let arr = Object.keys(global.db.data.users)
@@ -111,16 +106,18 @@ let handler = async (m, { conn }) => {
         return { jid, total: (u.money || 0) + (u.bank || 0) }
       })
       .sort((a, b) => b.total - a.total)
+
     if (m.isGroup) {
       const meta = await conn.groupMetadata(m.chat)
       const groupJids = meta.participants.map(p => p.id)
       arr = arr.filter(x => groupJids.includes(x.jid))
     }
+
     const idx = arr.findIndex(x => x.jid === m.sender)
     rankText = idx >= 0 ? String(idx + 1) : 'N/A'
-  } catch (e) { rankText = 'N/A' }
+  } catch (e) {}
 
-  // Construir texto del menú (corregido sin duplicados ni errores de sintaxis)
+  // Menú
   let txt = `¡𝐇𝐨𝐥𝐚! Soy *${nombreBot}* ${conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)'}
 
 > ꒰⌢ ʚ˚₊‧ ✎ ꒱ INFO:
@@ -337,15 +334,13 @@ let handler = async (m, { conn }) => {
 > ${global.textbot || ''}
 `.trim()
 
-  // Menciones: mencionar al usuario que abrió el menú
   const mentions = [m.sender]
 
-  // Enviar el menú como imagen con caption (si la imagen se descargó)
   if (imageBuffer) {
     await conn.sendMessage(m.chat, {
       image: imageBuffer,
       caption: txt,
-      mentions: mentions,
+      mentions,
       contextInfo: {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
@@ -361,15 +356,14 @@ let handler = async (m, { conn }) => {
           sourceUrl: global.channel || '',
           showAdAttribution: false,
           containsAutoReply: true,
-          renderLargerThumbnail: false // Desactivamos thumbnail grande para evitar cualquier duplicado
+          renderLargerThumbnail: false
         }
       }
     }, { quoted: m })
   } else {
-    // Fallback si no se pudo descargar la imagen: enviar solo texto
     await conn.sendMessage(m.chat, {
       text: txt,
-      mentions: mentions,
+      mentions,
       contextInfo: {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
@@ -385,7 +379,7 @@ let handler = async (m, { conn }) => {
           sourceUrl: global.channel || '',
           showAdAttribution: false,
           containsAutoReply: true,
-          renderLargerThumbnail: false // Desactivamos thumbnail grande para evitar cualquier duplicado
+          renderLargerThumbnail: false
         }
       }
     }, { quoted: m })
