@@ -1,5 +1,4 @@
-/* 
-🌛 Code created by Félix ofc 
+/* 🌛 Code created by Félix ofc 
 Please leave credits  👑
 🌟 Github -> https://github.com/FELIX-OFC
 */
@@ -16,7 +15,8 @@ const formatClock = ms => {
   const h = Math.floor(total / 3600)
   const m = Math.floor((total % 3600) / 60)
   const s = total % 60
-  return `\( {pad(h)}: \){pad(m)}:${pad(s)}`   // ← CORREGIDO
+  // ARREGlado: Uso correcto de template literals con ${}
+  return `${pad(h)}:${pad(m)}:${pad(s)}`
 }
 
 const formatPing = ms => {
@@ -118,7 +118,8 @@ let handler = async (m, { conn }) => {
   } catch (e) {}
 
   // Menú
-  let txt = `¡𝐇𝐨𝐥𝐚! Soy *${nombreBot}* ${conn.user.jid == global.conn.user.jid ? '(OficialBot)' : '(Sub-Bot)'}
+  let isOficial = conn.user.jid === global.conn?.user?.jid // Condición segura
+  let txt = `¡𝐇𝐨𝐥𝐚! Soy *${nombreBot}* ${isOficial ? '(OficialBot)' : '(Sub-Bot)'}
 
 > ꒰⌢ ʚ˚₊‧ ✎ ꒱ INFO:
 - ${nombreBot} es un bot privado, el cual el bot principal no se unirá a tus grupos. Si quieres tener el bot en tu grupo tienes que ser Sub-Bot con *(#code)*
@@ -299,9 +300,7 @@ let handler = async (m, { conn }) => {
 > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #welcome <on/off>*
 > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #antienlace <on/off>*
 > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #antilink <on/off>*
-> *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #modoadmin <on/off>* 
-> *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #detect <on/off>* 
-> *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #open*
+> *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #modoadmin <on/off>* > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #detect <on/off>* > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #open*
 > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #close*
 > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #abrir*
 > *𑁍⃪࣭۪ٜ݊݊݊݊݊໑ٜ࣪ ❏ #cerrar*
