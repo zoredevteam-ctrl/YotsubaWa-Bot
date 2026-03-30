@@ -54,7 +54,7 @@ global.suittag = ['18293527611']; // Reemplaza el placeholder con números reale
 global.prems = []; // Array vacío para usuarios premium (agrega según necesites)
 
 // Assets y configuraciones visuales
-global.banner = 'https://causas-files.vercel.app/fl/xfab.jpg';
+global.banner = 'https://causas-files.vercel.app/fl/wjir.jpg';
 global.icono = 'https://causas-files.vercel.app/fl/wjir.jpg';
 global.catalogo = null;
 
