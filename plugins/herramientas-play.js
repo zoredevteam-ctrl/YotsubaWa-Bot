@@ -1,8 +1,4 @@
-/**
- * PLAY - NINO NAKANO
- * Comandos: #play (audio), #playvid (video)
- * APIs: api.giftedtech.co.ke (primaria) + rest.alyabotpe.xyz (fallback)
- */
+
 
 import yts from 'yt-search'
 
