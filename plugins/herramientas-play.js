@@ -1,5 +1,3 @@
-
-
 import yts from 'yt-search'
 
 const GIFTED_API = 'https://api.giftedtech.co.ke/api'
